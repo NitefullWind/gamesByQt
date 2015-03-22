@@ -1,7 +1,7 @@
-#include "map.h"
+#include "pillar.h"
 #include <QPainter>
 
-Map::Map(qreal x, qreal y, qreal hight):
+Pillar::Pillar(qreal x, qreal y, qreal hight):
     rectX(0),
     rectY(0),
     rectHight(0)
@@ -14,26 +14,27 @@ Map::Map(qreal x, qreal y, qreal hight):
     rectHight = hight;
 }
 
-void Map::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void Pillar::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
+    painter->setRenderHint(QPainter::Antialiasing,true);
     painter->save();
     painter->fillPath(shape(),Qt::green);
     painter->restore();
 }
 
-QRectF Map::boundingRect() const
+QRectF Pillar::boundingRect() const
 {
     return QRectF(rectX,rectY,RectWidth,rectHight);
 }
 
-QPainterPath Map::shape() const
+QPainterPath Pillar::shape() const
 {
     QPainterPath p;
     p.addRect(rectX,rectY,RectWidth,rectHight);
     return p;
 }
 
-void Map::advance(int step)
+void Pillar::advance(int step)
 {
     if(!step){
         return;
@@ -43,6 +44,6 @@ void Map::advance(int step)
     setPos(rectPos,0);      //设置元素坐标
 }
 
-Map::~Map()
+Pillar::~Pillar()
 {
 }

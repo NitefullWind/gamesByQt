@@ -5,7 +5,8 @@
 
 class QGraphicsScene;
 class QKeyEvent;
-class Map;
+class QMouseEvent;
+class Pillar;
 class Bird;
 
 class Controller : public QObject
@@ -16,22 +17,26 @@ public:
     QTimer timer;
 signals:
     void scoreChanged(const int &score) const;      //自定义信号，发送新的分数
-    void gameIsOver() const;              //游戏结束信号
+    void gameIsOver(const bool is) const;
 public slots:
     void pause();
-    void resume();
     void addPillar();
     void birdIsCollided();
 private:
-    int tickCounter, tickCounterFly, scoreCounter;
+    int tickCounter, tickCounterFly;
     QGraphicsScene &scene;
-    QList<Map *> allPillars;
+    QList<Pillar *> allPillars;
     Bird *bird;
     qreal randomHight() const;
-    qreal pillarHight, birdHight;
+    qreal pillarHight, birdHight, scoreCounter, highestMark;
     bool isPaused;
     void keyPressed(QKeyEvent *event);
+    void mousePressEvent(QMouseEvent *event);
     void gameOver();
+    void newGame();
+    void writesSettings();
+    void readSettings();
+
 protected:
     bool eventFilter(QObject *object, QEvent *event);
 };

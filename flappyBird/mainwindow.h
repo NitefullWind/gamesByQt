@@ -18,11 +18,9 @@ private:
     QGraphicsView *view;
     Controller *game;
     QLabel *scoreLabel;
-    QWidget *gameOverWidget;
 private slots:
     void showScore(const int &score);
-    void gameOver();
-    void newGame();
+    void hideScore(const bool is);
 };
 
 #endif // MAINWINDOW

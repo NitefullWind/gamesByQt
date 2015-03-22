@@ -13,8 +13,17 @@
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent)
     ,scoreLabel(new QLabel(this))
+    ,scene(new QGraphicsScene(0,0,400,600,this))
+    ,view(new QGraphicsView(scene,this))
+    ,game(new Controller(*scene,this))
 {
-    newGame();
+    view->setBackgroundBrush(QPixmap(":/files/bg.jpg"));
+    scene->addWidget(scoreLabel);
+    showScore(0);
+
+    connect(game,SIGNAL(scoreChanged(int)), this, SLOT(showScore(int)));
+    connect(game,SIGNAL(gameIsOver(bool)), this, SLOT(hideScore(bool)));
+    setCentralWidget(view);
     scoreLabel->setFixedSize(150,50);
     scoreLabel->setStyleSheet("background:rgba(0,0,0,0,0)");
 
@@ -27,33 +36,13 @@ void MainWindow::showScore(const int &score)
     scoreLabel->setText(tr("<h1>Score: %1</h1>").arg(score));
 }
 
-void MainWindow::gameOver()
+void MainWindow::hideScore(const bool is)
 {
-    QWidget *widget = new QWidget;
-    QPushButton *newGameButton = new QPushButton(tr("PLAY ANAIN"));
-    connect(newGameButton,SIGNAL(clicked()),this,SLOT(newGame()));
-    QVBoxLayout vLayout;
-    vLayout.addStretch();
-    vLayout.addWidget(scoreLabel);
-    vLayout.addWidget(newGameButton);
-    vLayout.addStretch();
-    widget->setLayout(&vLayout);
-    setCentralWidget(widget);
-}
-
-void MainWindow::newGame()
-{
-    scene = new QGraphicsScene(0,0,400,600,this);
-    view = new QGraphicsView(scene,this);
-    game = new Controller(*scene,this);
-
-    view->setBackgroundBrush(QPixmap(":/files/bg.jpg"));
-    scene->addWidget(scoreLabel);
-    showScore(0);
-
-    connect(game,SIGNAL(scoreChanged(int)), this, SLOT(showScore(int)));
-    connect(game,SIGNAL(gameIsOver()),this,SLOT(gameOver()));
-    setCentralWidget(view);
+    if(is){
+        scoreLabel->hide();
+    }else{
+        scoreLabel->show();
+    }
 }
 
 MainWindow::~MainWindow()

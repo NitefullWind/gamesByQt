@@ -13,17 +13,20 @@ TEMPLATE = app
 
 
 SOURCES +=\
-        map.cpp \
     mainwindow.cpp \
     controller.cpp \
     mainwindow.cpp \
     main.cpp \
-    bird.cpp
+    bird.cpp \
+    end.cpp \
+    pillar.cpp
 
-HEADERS  += map.h \
+HEADERS  += \
     controller.h \
     mainwindow.h \
-    bird.h
+    bird.h \
+    end.h \
+    pillar.h
 
 RESOURCES += \
     image.qrc

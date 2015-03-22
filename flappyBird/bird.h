@@ -18,7 +18,7 @@ private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     QRectF boundingRect() const;
     QPainterPath shape() const;
-    qreal hight, spead;
+    qreal hight, spead, angle;
 protected:
     void advance(int step);
 };

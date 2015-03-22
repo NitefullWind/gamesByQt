@@ -3,11 +3,11 @@
 
 #include <QGraphicsItem>
 
-class Map : public QGraphicsItem
+class Pillar : public QGraphicsItem
 {
 public:
-    Map(qreal x, qreal y, qreal hight);
-    ~Map();
+    Pillar(qreal x, qreal y, qreal hight);
+    ~Pillar();
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     QRectF boundingRect() const;
