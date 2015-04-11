@@ -7,7 +7,6 @@ Wall::Wall(qreal x, qreal y, qreal w, qreal h) :
     width(w),
     height(h)
 {
-
 }
 
 void Wall::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)

@@ -9,6 +9,7 @@
 #include "food.h"
 #include "wall.h"
 #include "snake.h"
+#include "end.h"
 
 class Controller : public QObject
 {
@@ -21,6 +22,9 @@ private:
     Wall *wall[4];
     Snake *snake;
     Food *food;
+    End *end;
+
+    qreal score;
 
     QTimer timer;
     bool gameIsPause;
@@ -33,6 +37,11 @@ private:
 
     void newGame();
 
+    void eatFood();
+
+private slots:
+    void checkCollisions();
+    void gameIsOver(bool isOk);
 protected:
     bool eventFilter(QObject *object, QEvent *event);
 };

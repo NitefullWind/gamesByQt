@@ -10,20 +10,29 @@
 class Snake : public QGraphicsItem
 {
 public:
-    Snake(QGraphicsItem *parent = 0);
+    Snake(qreal x=0, qreal y=0, int length=0);
     ~Snake();
 
-    enum Direction {Up, Down, Left, Right};
-    Direction moveDirection;
-    void setDirection(Direction direction);
-private:
     QPointF head;
+
+    enum Direction {Up, Down, Left, Right};
+    void setDirection(Direction direction);
+    Direction nowDirection() {return moveDirection;}
+
+    QPainterPath shape() const;
+
+    void grow(QPointF p);
+    bool eatItself;
+private:
     QList<QPointF> body;
+    QList<QPointF> growPoint;
     enum {Width=30, Height=30};
+
+    Direction moveDirection;
+    bool directionIsChanged;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     QRectF boundingRect() const;
-    QPainterPath shape() const;
 
     void moveUp();
     void moveDown();

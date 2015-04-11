@@ -5,12 +5,12 @@
 
 End::End(qreal score, qreal best)
 {
-    setPos(200,300);
+    setPos(0,0);
     newScore = score;
     highestMark = best;
 }
 
-void End::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void End::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setBrush(Qt::lightGray);
     painter->drawRoundRect(-100,-100,200,200,20);

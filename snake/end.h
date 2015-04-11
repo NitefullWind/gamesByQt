@@ -8,7 +8,7 @@ public:
     End(qreal score = 0, qreal best = 0);
     ~End();
 private:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     QRectF boundingRect() const;
     QPainterPath shape() const;
     qreal newScore, highestMark;
