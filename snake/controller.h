@@ -20,11 +20,9 @@ public:
 private:
     QGraphicsScene &scene;
     Wall *wall[4];
-    Snake *snake;
+    Snake *snake[2];
     Food *food;
     End *end;
-
-    qreal score;
 
     QTimer timer;
     bool gameIsPause;
@@ -37,11 +35,10 @@ private:
 
     void newGame();
 
-    void eatFood();
-
+    bool gameIsOver;
+    void gameOver(QString winner);
 private slots:
     void checkCollisions();
-    void gameIsOver(bool isOk);
 protected:
     bool eventFilter(QObject *object, QEvent *event);
 };

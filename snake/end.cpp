@@ -1,53 +1,55 @@
 #include "end.h"
 #include <QPainter>
-#include <QGraphicsSceneMouseEvent>
-#include <QDebug>
 
-End::End(qreal score, qreal best)
+End::End():
+    score0(0),
+    score1(0),
+    winner("")
 {
-    setPos(0,0);
-    newScore = score;
-    highestMark = best;
+}
+
+void End::setScore(qreal score0, qreal score1)
+{
+    this->score0 = score0;
+    this->score1 = score1;
+    update(boundingRect());
 }
 
 void End::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setBrush(Qt::lightGray);
-    painter->drawRoundRect(-100,-100,200,200,20);
+    painter->drawRect(-300,-500,600,100);
 
-    QRectF rect1(-80,-80,160,60);
+    QRectF snake0(-300,-500,200,100);
+    QFont font("微软雅黑",15);
+    painter->setFont(font);
+    painter->setPen(Qt::red);
+    painter->drawText(snake0,"Red Snake:\n Score : " + QString::number(score0), QTextOption(Qt::AlignCenter));
+
+    QRectF snake1(100,-500,200,100);
+    painter->setFont(font);
+    painter->setPen(Qt::green);
+    painter->drawText(snake1,"Green Snake:\n Score : " + QString::number(score1), QTextOption(Qt::AlignCenter));
+
+    QRectF winnerRect(-100,-500,200,100);
     QFont font1("微软雅黑",20,QFont::Bold,true);     //设置字体样式：类型，大小，加粗，斜体
     painter->setFont(font1);         //添加字体
     painter->setPen(Qt::yellow);
-    painter->drawText(rect1,"Game Over",QTextOption(Qt::AlignCenter));
-
-    QRectF rect2(-80,-20,160,30);
-    QFont font2("微软雅黑",15);
-    painter->setFont(font2);
-    painter->setPen(Qt::red);
-    painter->drawText(rect2,"Score : "+QString::number(newScore), QTextOption(Qt::AlignCenter));
-
-    QRectF rect3(-80,10,160,30);
-    painter->drawText(rect3,"Best : "+QString::number(highestMark), QTextOption(Qt::AlignCenter));
-
-    painter->setBrush(Qt::blue);
-    painter->drawRoundedRect(-60,40,120,40,10,10);
-}
-
-QPainterPath End::shape() const
-{
-    QPainterPath path;
-    path.addRoundRect(-100,-100,200,200,20);
-    return path;
+    painter->drawText(winnerRect,winner,QTextOption(Qt::AlignCenter));
 }
 
 QRectF End::boundingRect() const
 {
-    return QRectF(-100,-100,200,200);
+    return QRectF(-300,-450,600,50);
+}
+
+void End::setWinner(QString w)
+{
+    winner = w;
+    update(boundingRect());
 }
 
 End::~End()
 {
 
 }
-

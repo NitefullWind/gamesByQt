@@ -5,15 +5,16 @@
 #include <QList>
 #include <QPointF>
 #include <QPainter>
-
+#include <QColor>
 
 class Snake : public QGraphicsItem
 {
 public:
-    Snake(qreal x=0, qreal y=0, int length=0);
+    Snake(qreal x=0, qreal y=0, int length=0, QString dir="right", QColor color=Qt::green, QString name="None");
     ~Snake();
 
-    QPointF head;
+    QPointF getHead() {return head;}
+    QPointF getTail() {return body.front();}
 
     enum Direction {Up, Down, Left, Right};
     void setDirection(Direction direction);
@@ -22,11 +23,20 @@ public:
     QPainterPath shape() const;
 
     void grow(QPointF p);
+    void beEaten();
     bool eatItself;
+
+    qreal getScore() {return score;}
+    QString getName(){return name;}
 private:
+    QPointF head;
     QList<QPointF> body;
     QList<QPointF> growPoint;
     enum {Width=30, Height=30};
+    QColor bodyColor;
+    QString name;
+
+    qreal score;
 
     Direction moveDirection;
     bool directionIsChanged;

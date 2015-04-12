@@ -1,23 +1,32 @@
 #include "snake.h"
-#include <QDebug>
 
-Snake::Snake(qreal x, qreal y, int length):
+Snake::Snake(qreal x, qreal y, int length, QString dir, QColor color, QString name):
     head(QPointF(x,y)),
     moveDirection(Right),
-    eatItself(false)
+    eatItself(false),
+    score(0),
+    name(name)
 {
     body << head;
-    for(int i=0;i<length;i++){   //添加三次为初始蛇身
-        head.rx() += Width;     //头向右移动Width像素
-        body << head;           //将蛇头加入蛇身中
+    if(dir=="right"){
+        for(int i=0;i<length;i++){   //添加三次为初始蛇身
+            head.rx() += Width;     //头向右移动Width像素
+            body << head;           //将蛇头加入蛇身中
+        }
+    }else if(dir=="left"){
+        for(int i=0;i<length;i++){
+            head.rx() -= Width;
+            body << head;
+        }
     }
-    setPos(0,0);
+
+    bodyColor = color;
 }
 
 void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
 
-    painter->setBrush(Qt::green);
+    painter->setBrush(bodyColor);
     foreach (QPointF p, growPoint) {    //遍历蛇身上吃到食物的点，进行绘画
         if(body.contains(p)){
             painter->drawEllipse(p.rx(), p.ry(), Width, Height);
@@ -25,7 +34,7 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
             growPoint.pop_front();
         }
     }
-    painter->fillPath(shape(), Qt::green);
+    painter->fillPath(shape(), bodyColor);
 
     painter->setBrush(Qt::white);
     painter->drawEllipse((head.rx()+10),(head.ry()+10),15,10);
@@ -132,6 +141,13 @@ void Snake::grow(QPointF p)
 {
     body << p;
     growPoint << p;     //用body << p;也能实现移动，但p点在body上时显示不出来。。。
+    score++;            //加一分
+}
+
+void Snake::beEaten()
+{
+    body.pop_front();
+    score--;
 }
 
 Snake::~Snake()
