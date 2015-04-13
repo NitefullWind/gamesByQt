@@ -1,4 +1,5 @@
 #include "food.h"
+#include "constants.h"
 #include <QPainter>
 
 Food::Food(qreal x, qreal y):
@@ -15,13 +16,13 @@ void Food::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 
 QRectF Food::boundingRect() const
 {
-    return QRectF(0,0,30,30);
+    return QRectF(0,0,Width,Height);
 }
 
 QPainterPath Food::shape() const
 {
     QPainterPath path;
-    path.addRoundedRect(0,0,30,30,15,15,Qt::AbsoluteSize);
+    path.addRoundedRect(0,0,Width,Height,15,15,Qt::AbsoluteSize);
     return path;
 }
 

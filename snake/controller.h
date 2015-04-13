@@ -6,10 +6,11 @@
 #include <QKeyEvent>
 #include <QGraphicsScene>
 
+#include "constants.h"
 #include "food.h"
 #include "wall.h"
 #include "snake.h"
-#include "end.h"
+#include "infoWidget.h"
 
 class Controller : public QObject
 {
@@ -22,7 +23,7 @@ private:
     Wall *wall[4];
     Snake *snake[2];
     Food *food;
-    End *end;
+    InfoWidget *info;
 
     QTimer timer;
     bool gameIsPause;
@@ -36,7 +37,7 @@ private:
     void newGame();
 
     bool gameIsOver;
-    void gameOver(QString winner);
+    void gameOver(QString information);
 private slots:
     void checkCollisions();
 protected:

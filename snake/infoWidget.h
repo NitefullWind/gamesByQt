@@ -2,17 +2,17 @@
 #define GAMEOVER_H
 #include <QGraphicsItem>
 
-class End : public QGraphicsItem
+class InfoWidget : public QGraphicsItem
 {
 public:
-    End();
-    ~End();
+    InfoWidget();
+    ~InfoWidget();
     void setScore(qreal score0, qreal score1);
-    void setWinner(QString w);
+    void setInformation(QString w);
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     QRectF boundingRect() const;
-    QString winner;
+    QString information;
     qreal score0, score1;
 };
 

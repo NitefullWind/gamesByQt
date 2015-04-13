@@ -1,21 +1,21 @@
-#include "end.h"
+#include "infoWidget.h"
 #include <QPainter>
 
-End::End():
+InfoWidget::InfoWidget():
     score0(0),
     score1(0),
-    winner("")
+    information("")
 {
 }
 
-void End::setScore(qreal score0, qreal score1)
+void InfoWidget::setScore(qreal score0, qreal score1)
 {
     this->score0 = score0;
     this->score1 = score1;
     update(boundingRect());
 }
 
-void End::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void InfoWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setBrush(Qt::lightGray);
     painter->drawRect(-300,-500,600,100);
@@ -31,25 +31,25 @@ void End::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     painter->setPen(Qt::green);
     painter->drawText(snake1,"Green Snake:\n Score : " + QString::number(score1), QTextOption(Qt::AlignCenter));
 
-    QRectF winnerRect(-100,-500,200,100);
+    QRectF informationRect(-100,-500,200,100);
     QFont font1("微软雅黑",20,QFont::Bold,true);     //设置字体样式：类型，大小，加粗，斜体
     painter->setFont(font1);         //添加字体
     painter->setPen(Qt::yellow);
-    painter->drawText(winnerRect,winner,QTextOption(Qt::AlignCenter));
+    painter->drawText(informationRect,information,QTextOption(Qt::AlignCenter));
 }
 
-QRectF End::boundingRect() const
+QRectF InfoWidget::boundingRect() const
 {
     return QRectF(-300,-450,600,50);
 }
 
-void End::setWinner(QString w)
+void InfoWidget::setInformation(QString w)
 {
-    winner = w;
+    information = w;
     update(boundingRect());
 }
 
-End::~End()
+InfoWidget::~InfoWidget()
 {
 
 }

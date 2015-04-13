@@ -1,19 +1,19 @@
 #include "snake.h"
 
-Snake::Snake(qreal x, qreal y, int length, QString dir, QColor color, QString name):
+Snake::Snake(qreal x, qreal y, int length, Direction dir, QColor color, QString name):
     head(QPointF(x,y)),
-    moveDirection(Right),
     eatItself(false),
+    moveDirection(dir),
     score(0),
     name(name)
 {
     body << head;
-    if(dir=="right"){
+    if(dir==Right){
         for(int i=0;i<length;i++){   //添加三次为初始蛇身
             head.rx() += Width;     //头向右移动Width像素
             body << head;           //将蛇头加入蛇身中
         }
-    }else if(dir=="left"){
+    }else if(dir==Left){
         for(int i=0;i<length;i++){
             head.rx() -= Width;
             body << head;
@@ -46,7 +46,7 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 QRectF Snake::boundingRect() const
 {
-    return QRectF(-300,-400,600,800);
+    return QRectF(-300,-400,SceneWidth,SceneHeight);
     /************
                        -Height
                      -Width +---+---+

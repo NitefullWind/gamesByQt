@@ -18,13 +18,14 @@ SOURCES += main.cpp\
     snake.cpp \
     food.cpp \
     controller.cpp \
-    end.cpp \
+    infoWidget.cpp
 
 HEADERS  += mainwindow.h \
     wall.h \
     snake.h \
     food.h \
     controller.h \
-    end.h \
+    constants.h \
+    infoWidget.h
 
 FORMS    += mainwindow.ui

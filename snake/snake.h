@@ -7,16 +7,17 @@
 #include <QPainter>
 #include <QColor>
 
+#include "constants.h"
+
 class Snake : public QGraphicsItem
 {
 public:
-    Snake(qreal x=0, qreal y=0, int length=0, QString dir="right", QColor color=Qt::green, QString name="None");
+    Snake(qreal x=0, qreal y=0, int length=0, Direction dir=Right, QColor color=Qt::green, QString name="None");
     ~Snake();
 
     QPointF getHead() {return head;}
     QPointF getTail() {return body.front();}
 
-    enum Direction {Up, Down, Left, Right};
     void setDirection(Direction direction);
     Direction nowDirection() {return moveDirection;}
 
@@ -32,7 +33,6 @@ private:
     QPointF head;
     QList<QPointF> body;
     QList<QPointF> growPoint;
-    enum {Width=30, Height=30};
     QColor bodyColor;
     QString name;
 
