@@ -1,4 +1,5 @@
 #include "infoWidget.h"
+#include "constants.h"
 #include <QPainter>
 
 InfoWidget::InfoWidget():
@@ -6,6 +7,7 @@ InfoWidget::InfoWidget():
     score1(0),
     information("")
 {
+    setPos(-SceneX-Width,-PosY);
 }
 
 void InfoWidget::setScore(qreal score0, qreal score1)
@@ -18,29 +20,29 @@ void InfoWidget::setScore(qreal score0, qreal score1)
 void InfoWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setBrush(Qt::lightGray);
-    painter->drawRect(-300,-500,600,100);
+    painter->drawRect(0,0,150,SceneHeight);
 
-    QRectF snake0(-300,-500,200,100);
+    QRectF snake0(0,0,150,200);
     QFont font("微软雅黑",15);
     painter->setFont(font);
     painter->setPen(Qt::red);
-    painter->drawText(snake0,"Red Snake:\n Score : " + QString::number(score0), QTextOption(Qt::AlignCenter));
+    painter->drawText(snake0,"红蛇:\n 得分 : " + QString::number(score0), QTextOption(Qt::AlignCenter));
 
-    QRectF snake1(100,-500,200,100);
+    QRectF snake1(0,400,150,200);
     painter->setFont(font);
     painter->setPen(Qt::green);
-    painter->drawText(snake1,"Green Snake:\n Score : " + QString::number(score1), QTextOption(Qt::AlignCenter));
+    painter->drawText(snake1,"率蛇:\n 得分 : " + QString::number(score1), QTextOption(Qt::AlignCenter));
 
-    QRectF informationRect(-100,-500,200,100);
+    QRectF informationRect(0,200,150,200);
     QFont font1("微软雅黑",20,QFont::Bold,true);     //设置字体样式：类型，大小，加粗，斜体
     painter->setFont(font1);         //添加字体
-    painter->setPen(Qt::yellow);
+    painter->setPen(Qt::black);
     painter->drawText(informationRect,information,QTextOption(Qt::AlignCenter));
 }
 
 QRectF InfoWidget::boundingRect() const
 {
-    return QRectF(-300,-450,600,50);
+    return QRectF(0,0,150,SceneHeight);
 }
 
 void InfoWidget::setInformation(QString w)

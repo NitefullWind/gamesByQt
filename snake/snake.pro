@@ -28,4 +28,6 @@ HEADERS  += mainwindow.h \
     constants.h \
     infoWidget.h
 
+RC_FILE = snakeIcon.rc
+
 FORMS    += mainwindow.ui

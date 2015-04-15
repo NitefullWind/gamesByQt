@@ -5,7 +5,8 @@ Controller::Controller(QGraphicsScene &scene, QObject *parent):
     QObject(parent),
     scene(scene),
     food(new Food(0,0)),
-    gameIsOver(false)
+    gameIsOver(false),
+    gameIsPause(false)
 {
     drawWall();
     drawSnake();
@@ -20,15 +21,23 @@ Controller::Controller(QGraphicsScene &scene, QObject *parent):
     connect(&timer, SIGNAL(timeout()), this, SLOT(checkCollisions())); //检测碰撞
 
     pause();
+    info->setInformation("空格:开始\暂停\nEsc:Play Again");
 }
-
+/* (-450,-300)(-PosX,-PosY)(SceneX,300)
+ *      +---+-----------+
+ *      |   |           |
+ *      |   |600  :     |
+ *      |150|     750   |
+ *      +---+-----------+
+ * (-450,300)(-300,300)(450,300)
+*/
 void Controller::drawWall()
 {
     //初始化四周的墙
-    wall[0] = new Wall(-300,-390,600,30);
-    wall[1] = new Wall(-300,-390,30,780);
-    wall[2] = new Wall(-300,360,600,30);
-    wall[3] = new Wall(270,-390,30,780);
+    wall[0] = new Wall(-PosX,-PosY,SceneWidth,Width);
+    wall[1] = new Wall(SceneX-Width,-PosY,Width,SceneHeight);
+    wall[2] = new Wall(-PosX,PosY-Width,SceneWidth,Width);
+    wall[3] = new Wall(-PosX,-PosY,Width,SceneHeight);
 
     //添加到场景中
     for(int i=0;i<4;i++){
@@ -38,9 +47,9 @@ void Controller::drawWall()
 
 void Controller::drawSnake()
 {
-    snake[0] = new Snake(-270,-360,3,Right,Qt::red,"Red Snake");
+    snake[0] = new Snake(-PosX+Width,-PosY+Width,3,Right,Qt::red,"红蛇");
     scene.addItem(snake[0]);
-    snake[1] = new Snake(240,330,3,Left,Qt::green,"Green Snake");
+    snake[1] = new Snake(SceneX-2*Width,PosY-2*Width,3,Left,Qt::green,"绿蛇");
     scene.addItem(snake[1]);
 }
 
@@ -51,8 +60,8 @@ void Controller::drawFood()
     }
     qreal x=0, y=0;
     do{                                                 //随机产生食物坐标
-        x = (qrand() % 18)*Width-270;
-        y = (qrand() % 24)*Width-360;
+        x = (qrand() % (SceneWidth/Width-2))*Width-PosX+Width;
+        y = (qrand() % (SceneHeight/Width-2))*Width-SceneHeight/2+Width;
     }while(snake[0]->shape().contains(QPointF(x,y))||snake[1]->shape().contains(QPointF(x,y))||food->x()==x&&food->y()==y);      //检测食物的坐标是否在蛇身上
     food = new Food(x,y);
     scene.addItem(food);
@@ -79,11 +88,11 @@ void Controller::pause()
     if(!gameIsOver){
         //游戏暂停中则开始计时，否则停止计时
         if(gameIsPause){
-            info->setInformation("游戏开始啦~");
+            info->setInformation("快跑啊，游戏开始啦~");
             timer.start(1000/3);
             gameIsPause = false;
         }else{
-            info->setInformation("游戏暂停ing...");
+            info->setInformation("兄弟别急，游戏正暂停着...");
             timer.stop();
             gameIsPause = true;
         }

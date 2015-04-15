@@ -9,13 +9,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    scene = new QGraphicsScene(-300,-450,SceneWidth,SceneHeight,this);
+    scene = new QGraphicsScene(-450,-300,SceneWidth+100,SceneHeight,this);
     view = new QGraphicsView(scene,this);
     controller = new Controller(*scene,this);
     ui->setupUi(this);
     setCentralWidget(view);
-    setFixedSize(630,940);
-    setWindowTitle(tr("Two Small Snake"));
+    setFixedSize(950,650);
+    setWindowTitle(tr("两条小蛇"));
 }
 
 MainWindow::~MainWindow()

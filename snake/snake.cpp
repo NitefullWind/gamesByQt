@@ -46,7 +46,7 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 QRectF Snake::boundingRect() const
 {
-    return QRectF(-300,-400,SceneWidth,SceneHeight);
+    return QRectF(-PosX,-PosY,SceneWidth,SceneHeight);
     /************
                        -Height
                      -Width +---+---+
@@ -108,32 +108,32 @@ void Snake::setDirection(Direction direction)
 void Snake::moveUp()
 {
     head.ry() -= Height;
-    if(head.ry()<-380){
-        head.ry() = 330;
+    if(head.ry()<-(PosY-Width)){
+        head.ry() = PosY-2*Width;
     }
 }
 
 void Snake::moveDown()
 {
     head.ry() += Height;
-    if(head.ry()>330){
-        head.ry() = -360;
+    if(head.ry()>PosY-2*Width){
+        head.ry() = -(PosY-Width);
     }
 }
 
 void Snake::moveLeft()
 {
     head.rx() -= Width;
-    if(head.rx()<-270){
-        head.rx() = 240;
+    if(head.rx()<-(PosX-Width)){
+        head.rx() = SceneX-2*Width;
     }
 }
 
 void Snake::moveRight()
 {
     head.rx() += Width;
-    if(head.rx()>240){
-        head.rx() = -270;
+    if(head.rx()>SceneX-2*Width){
+        head.rx() = -(PosX-Width);
     }
 }
 
